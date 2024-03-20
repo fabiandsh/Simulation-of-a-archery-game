@@ -23,6 +23,7 @@ class Player:
         self.round_score = 0
         self.extra_throws = 0
         self.rounds_won = 0
+        self.won_bonus = 0
 
 
     def assign_target_male(self, random_number):
@@ -122,15 +123,21 @@ class Player:
         """
         self.rounds_won += 1
         self.experience += 3
+        if self.rounds_won % 3 == 0: 
+            self.won_bonus = 2; 
+            print(f"El jugador{self.name} obtuvo bonificación solo se le resta 1 a su resitencia por dos rondas ")
 
-        if self.rounds_won % 3 == 0:
-            self.resistance -= 1
+
 
     def add_wear(self):
         """
-        Least one or two units, which represent fatigue from the game
+        Least one or two units, which represent fatigue from the game, or  least 1 if the player is bonused
         """
-        self.actual_resistance = self.last_resistance - PseudoRandom.getIntNumberBeetween(1,2)
+        if self.won_bonus > 0:
+            self.resistance-=1
+            print("Solamente se le resta 1")
+        else:
+            self.resistance = self.resistance - PseudoRandom.getIntNumberBeetween(1,2)
 
 
 

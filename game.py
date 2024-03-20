@@ -30,7 +30,7 @@ class Game:
         self.check_win_team()
         players = self.team1.players + self.team2.players
         max_score_player = self.check_win_player(players)
-        max_score_player.rounds_won += 1
+        max_score_player.won_round()
         print(f'El jugador {max_score_player.name}, gano la ronda')
         self.reset_player()
 
@@ -61,7 +61,6 @@ class Game:
                 print(f"El jugador {player.name} tiro con un puntaje de {score}")
                 player.increase_round_score(score)
                 team.increase_score(score)
-            player.add_wear()
         
         self.take_additional_throw(team)
 
@@ -108,7 +107,6 @@ class Game:
                 print("Team 2 Wins!")
             else:
                 print("It's a tie!")
-            #self.reset_game()
 
     def reset_player(self):
         """
@@ -117,6 +115,8 @@ class Game:
         for player in self.team1.players + self.team2.players:
             player.luck = PseudoRandom.getFloatNumberBetween(1,3)
             player.round_score = 0
+            player.add_wear()
+            player.actual_resistance = player.resistance
 
     def reset_game(self):
         """
