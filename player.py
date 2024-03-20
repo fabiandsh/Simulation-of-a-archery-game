@@ -20,6 +20,7 @@ class Player:
         self.experience = experience
         self.luck = PseudoRandom.getFloatNumberBetween(1,3)
         self.score = 0
+        self.round_score = 0
         self.extra_throws = 0
         self.rounds_won = 0
 
@@ -90,20 +91,30 @@ class Player:
         Returns:
             bool: True if an extra throw is allowed, False otherwise.
         """
-        if self.extra_throws % 3 == 0:
-            return False
+        if self.extra_throws == 2 :
+            self.extra_throws = 0
+            return True
         else:
             self.extra_throws += 1
-            return True
+            return False
 
-    def increase_score(self, points):
+
+
+    def increase_round_score(self, points):
         """
-        Increases the player's score.
+        Increases the player's  round score.
 
         Args:
             points (int): The points to increase the score by.
         """
+        self.round_score += points
         self.score += points
+    
+    def reset_round_score(self):
+        """
+        Reset the player's round score
+        """
+        self.round_score = 0
 
     def won_round(self):
         """
@@ -121,15 +132,10 @@ class Player:
         """
         self.actual_resistance = self.last_resistance - PseudoRandom.getIntNumberBeetween(1,2)
 
-    def reset_rounds_won(self):
-        """
-        Resets the rounds won by the player.
-        """
-        self.rounds_won = 0
 
 
     def print_info(self):
         """
         Prints the information of the player.
         """
-        print(f"Player Information: Name: {self.name}, Gender: {self.gender}, Resistance: {self.resistance}, Experience: {self.experience}, Luck: {self.luck}, Score: {self.score}, Extra Throws: {self.extra_throws}, Rounds Won: {self.rounds_won} ")
+        print(f"Player Information: Name: {self.name}, Gender: {self.gender}, Resistance: {self.resistance}, Experience: {self.experience}, Luck: {self.luck}, Score: {self.score}, Round Score : {self.round_score}, Extra Throws: {self.extra_throws}, Rounds Won: {self.rounds_won} ")

@@ -41,6 +41,10 @@ class GameManager:
         """
         for _ in range(rounds):
             self.game.play_round()
+            for jugador in game_manager.team1.players:
+                jugador.print_info()
+            print("--------------------")
+
 
 
 
