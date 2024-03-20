@@ -107,6 +107,9 @@ class Game:
                 print("Team 2 Wins!")
             else:
                 print("It's a tie!")
+        players = self.team1.players + self.team2.players
+        max_won_player = max(players, key=lambda x: x.rounds_won)
+        print(f'El jugador que gano más rondas fue {max_won_player.name}')
 
     def reset_player(self):
         """

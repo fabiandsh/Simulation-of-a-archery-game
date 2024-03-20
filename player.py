@@ -145,4 +145,4 @@ class Player:
         """
         Prints the information of the player.
         """
-        print(f"Player Information: Name: {self.name}, Gender: {self.gender}, Resistance: {self.resistance}, Experience: {self.experience}, Luck: {self.luck}, Score: {self.score}, Round Score : {self.round_score}, Extra Throws: {self.extra_throws}, Rounds Won: {self.rounds_won} ")
+        print(f"Player Information: Name: {self.name}, Gender: {self.gender}, Resistance: {self.resistance}, Actual resistence: {self.actual_resistance}, Experience: {self.experience}, Luck: {self.luck}, Score: {self.score}, Round Score : {self.round_score}, Extra Throws: {self.extra_throws}, Rounds Won: {self.rounds_won} ")
