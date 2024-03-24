@@ -3,13 +3,14 @@ class Team:
     Represents a team in the game.
     """
 
-    def __init__(self, players):
+    def __init__(self, players, name):
         """
         Initializes a team with given players.
 
         Args:
             players (list): List of Player objects representing the team's players.
         """
+        self.name = name
         self.players = players
         self.score = 0
 

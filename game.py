@@ -1,10 +1,12 @@
 import random
 from pseudoRandom import PseudoRandom
 
+
 class Game:
     """
     Represents the game instance.
     """
+
 
     def __init__(self, team1, team2):
         """
@@ -17,6 +19,7 @@ class Game:
         self.team1 = team1
         self.team2 = team2
         self.round_number = 0
+        self.teamWinner = None
 
     def play_round(self):
         """
@@ -27,12 +30,12 @@ class Game:
 
         self.take_throws(self.team1)
         self.take_throws(self.team2)
-        self.check_win_team()
         players = self.team1.players + self.team2.players
         max_score_player = self.check_win_player(players)
         max_score_player.won_round()
         print(f'El jugador {max_score_player.name}, gano la ronda')
-        self.reset_player()
+        self.check_win_team()
+        
 
 
     def take_additional_throw(self,team):
@@ -58,7 +61,7 @@ class Game:
         for player in team.players:
             while player.could_throw():
                 score = player.take_throw()
-                print(f"El jugador {player.name} tiro con un puntaje de {score}")
+                #print(f"El jugador {player.name} tiro con un puntaje de {score}")
                 player.increase_round_score(score)
                 team.increase_score(score)
         
@@ -103,13 +106,19 @@ class Game:
         if self.round_number == 10:
             if self.team1.score > self.team2.score:
                 print("Team 1 Wins!")
+                self.teamWinner = self.team1
             elif self.team2.score > self.team1.score:
                 print("Team 2 Wins!")
+                self.teamWinner = self.team2
             else:
                 print("It's a tie!")
-        players = self.team1.players + self.team2.players
-        max_won_player = max(players, key=lambda x: x.rounds_won)
-        print(f'El jugador que gano más rondas fue {max_won_player.name}')
+            players = self.team1.players + self.team2.players
+            max_won_player = max(players, key=lambda x: x.rounds_won)
+            print(f'El jugador que gano más rondas fue {max_won_player.name}')
+            
+        else:
+            self.reset_player()
+
 
     def reset_player(self):
         """
@@ -125,11 +134,19 @@ class Game:
         """
         Resets the game for a new round.
         """
+        print("se reinicio el juego")
         for player in self.team1.players + self.team2.players:
-            player.reset_rounds_won()
-            player.resistance = random.randint(25, 45)
+            player.gender = gender = "Male" if PseudoRandom.getNumberBeteewZeroAndOne() >0.5 else "Female"
+            player.resistance = PseudoRandom.getIntNumberBeetweenWithNormalDistribution(35,10)
+            player.actual_resistance = player.resistance
+            player.experience = 10
+            player.luck = PseudoRandom.getFloatNumberBetween(1,3)
             player.score = 0
+            player.round_score = 0
             player.extra_throws = 0
-        self.team1.score = 0
-        self.team2.score = 0
+            player.rounds_won = 0
+            player.won_bonus = 0
+        self.team1.score = 1
+        self.team2.score = 2
         self.round_number = 0
+        self.teamWinner = None

@@ -15,7 +15,6 @@ class Player:
         self.name = name
         self.gender = gender = "Male" if PseudoRandom.getNumberBeteewZeroAndOne() >0.5 else "Female"
         self.resistance = PseudoRandom.getIntNumberBeetweenWithNormalDistribution(35,10)
-        self.last_resistance = self.resistance
         self.actual_resistance = self.resistance
         self.experience = experience
         self.luck = PseudoRandom.getFloatNumberBetween(1,3)
