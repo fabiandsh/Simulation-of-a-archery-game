@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk  
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
+import sys
 
 from gameManager import GameManager
 
@@ -58,9 +59,15 @@ class GUI:
         self.simulation_button.grid(row=5, columnspan=3, padx=5, pady=5)
 
 
-
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         # Run the window
         self.root.mainloop()
+        
+    
+    def on_closing(self):
+        # Manejar el cierre de la ventana principal
+        self.root.destroy()  # Cerrar la ventana principal
+        sys.exit()  # Salir del programa
 
     # Define functions for the additional buttons
     def show_experience(self):
