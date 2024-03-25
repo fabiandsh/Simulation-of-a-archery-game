@@ -9,7 +9,7 @@ class GameManager:
     Manages the initialization and execution of the game.
     """
 
-    def __init__(self):
+    def __init__(self, games):
         """
         Initializes the game manager.
         """
@@ -21,6 +21,19 @@ class GameManager:
         self.players_with_better_experience = []
         self.count_men = 0
         self.count_women = 0
+        self.players_scores = []
+
+        for _ in range(10):
+            self.players_scores.append([])
+
+        for i in range(0, games):
+            self.play_game()
+            self.save_winner()
+            self.save_b_lucky()
+            self.save_b_experience()
+            self.save_gender_winners()
+            self.save_players_scores()
+            self.reset_game()
 
     def create_team(self, group_number):
         """
@@ -73,6 +86,14 @@ class GameManager:
          players = self.team1.players + self.team2.players
          player_with_better_experience  = max(players, key=lambda x: x.experience)
          self.players_with_better_experience.append(f"El jugador con mayor experiencia fue {player_with_better_experience.name}")
+
+    def save_players_scores(self): 
+         players = self.team1.players + self.team2.players
+         i = 0
+         for player in players:
+            self.players_scores[i].append(player.score)
+            i+=1
+             
          
     def save_gender_winners(self):
         if self.game.teamWinner != None:
@@ -81,19 +102,11 @@ class GameManager:
                     self.count_men+=1
                 else: 
                     self.count_women+=1
-
+"""
 if __name__ == "__main__":
-    # Initialize game manager
-    game_manager = GameManager()
-    # Play the game
-    for i in range(0, 10):
-        game_manager.play_game()
-        game_manager.save_winner()
-        game_manager.save_b_lucky()
-        game_manager.save_b_experience()
-        game_manager.save_gender_winners()
-        game_manager.reset_game()
-
+    # Initialize game manager and play game
+    game_manager = GameManager(10)
+    
    #para imprimir lista ganadores equipos
     print("Lista ganadores por equipos")
     for team in game_manager.teams_Winners:
@@ -110,4 +123,4 @@ if __name__ == "__main__":
     print(f"La cantidad de hombres que ganaron fueron : {game_manager.count_men}")
     print(f"La cantidad de mujeres que ganaron fueron : {game_manager.count_women}")
     print("fin de la simulación yei")
-
+"""
