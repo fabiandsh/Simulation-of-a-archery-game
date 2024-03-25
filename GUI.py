@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk  
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 
@@ -11,11 +12,11 @@ class GUI:
         self.num_simulations = 0  # Variable global para almacenar el número de simulaciones
         self.gameManager = None
         self.root = tk.Tk()
-        self.root.geometry("800x600")
+        self.root.geometry("800x700")
         self.root.title("Monte Carlo Simulation")
 
         # Create and pack the top frame
-        self.frameTop = tk.Frame(self.root, width=800, height=200, bg="#3f334d")
+        self.frameTop = tk.Frame(self.root, width=800, height=300, bg="#3f334d")
         self.frameTop.pack(side=tk.TOP, expand=True)
 
         # Labels and entry fields for the additional fields
@@ -42,9 +43,19 @@ class GUI:
         self.groups_button = tk.Button(self.frameTop, text="Show winning groups", command=self.show_groups)
         self.groups_button.grid(row=3, column=2, padx=5, pady=5)
 
+        self.player_options = ['J{}'.format(i) for i in range(1, 11)]
+        self.player_combo = ttk.Combobox(self.frameTop, values=self.player_options, state='readonly')
+        self.player_combo.grid(row=4, column=0, columnspan=3, padx=5, pady=5)
+        
+        # Establecer J1 como el valor predeterminado
+        self.player_combo.set('J1')
+
+        # Asociar evento a cambio de selección en el ComboBox
+        self.player_combo.bind("<<ComboboxSelected>>", self.plot)
+
         # Start Simulation Button
         self.simulation_button = tk.Button(self.frameTop, text="Start Simulation", command=self.start_simulation)
-        self.simulation_button.grid(row=4, columnspan=3, padx=5, pady=5)
+        self.simulation_button.grid(row=5, columnspan=3, padx=5, pady=5)
 
 
 
@@ -110,19 +121,22 @@ class GUI:
         self.women_count.config(text=f"{self.gameManager.count_women}")
 
 
-    def plot(self):
+    def plot(self, event=None):
+        selected_value = self.player_combo.get()  # Obtener el valor seleccionado en el ComboBox
+        selected_index = self.player_options.index(selected_value)  # Obtener el índice del valor seleccionado
+
         if self.gameManager != None: 
             x = []
-            for i in range(1, len(self.gameManager.players_scores[0])+1):
-                x.append(f"J{i}")
+            for i in range(1, len(self.gameManager.players_scores[selected_index])+1):
+                x.append(f"G{i}")
             
-            y = self.gameManager.players_scores[0]
+            y = self.gameManager.players_scores[selected_index]
 
             fig, ax = plt.subplots()
             ax.bar(x, y)  # Cambiar a ax.bar para un gráfico de barras
-            ax.set_title('Gráfico de ejemplo')
-            ax.set_xlabel('Eje X')
-            ax.set_ylabel('Eje Y')
+            ax.set_title(f'Puntuaciones en cada juego del jugador {selected_value}')
+            ax.set_xlabel('Juegos')
+            ax.set_ylabel('Puntuaciones')
 
             # Clear previous plot if exists
             for widget in self.frameTop.winfo_children():
@@ -130,7 +144,7 @@ class GUI:
                     widget.get_tk_widget().destroy()
 
             canvas = FigureCanvasTkAgg(fig, master=self.frameTop)
-            canvas.get_tk_widget().grid(row=5, columnspan=3, padx=5, pady=5)  # Use grid instead of pack
+            canvas.get_tk_widget().grid(row=6, columnspan=3, padx=5, pady=5)  # Use grid instead of pack
             canvas.draw()
         else:
             print("No se ha iniciado ninguna simulación")
