@@ -13,7 +13,7 @@ class Player:
             experience (int, optional): The experience of the player. Defaults to 10.
         """
         self.name = name
-        self.gender = gender = "Male" if PseudoRandom.getNumberBeteewZeroAndOne() >0.5 else "Female"
+        self.gender  = "Male" if PseudoRandom.getNumberBeteewZeroAndOne() >0.5 else "Female"
         self.resistance = PseudoRandom.getIntNumberBeetweenWithNormalDistribution(35,10)
         self.actual_resistance = self.resistance
         self.experience = experience

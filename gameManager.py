@@ -3,6 +3,7 @@ from player import Player
 from team import Team
 from game import Game
 
+
 class GameManager:
     """
     Manages the initialization and execution of the game.
@@ -18,6 +19,8 @@ class GameManager:
         self.teams_Winners = []
         self.players_with_better_lucky = []
         self.players_with_better_experience = []
+        self.count_men = 0
+        self.count_women = 0
 
     def create_team(self, group_number):
         """
@@ -71,6 +74,14 @@ class GameManager:
          player_with_better_experience  = max(players, key=lambda x: x.experience)
          self.players_with_better_experience.append(f"El jugador con mayor experiencia fue {player_with_better_experience.name}")
          
+    def save_gender_winners(self):
+        if self.game.teamWinner != None:
+            for player in self.game.teamWinner.players:
+                if player.gender == "Male":
+                    self.count_men+=1
+                else: 
+                    self.count_women+=1
+
 if __name__ == "__main__":
     # Initialize game manager
     game_manager = GameManager()
@@ -80,6 +91,7 @@ if __name__ == "__main__":
         game_manager.save_winner()
         game_manager.save_b_lucky()
         game_manager.save_b_experience()
+        game_manager.save_gender_winners()
         game_manager.reset_game()
 
    #para imprimir lista ganadores equipos
@@ -95,6 +107,7 @@ if __name__ == "__main__":
     for player in game_manager.players_with_better_experience:
         print(player)
 
-    
+    print(f"La cantidad de hombres que ganaron fueron : {game_manager.count_men}")
+    print(f"La cantidad de mujeres que ganaron fueron : {game_manager.count_women}")
     print("fin de la simulación yei")
 
