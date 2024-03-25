@@ -17,7 +17,7 @@ class GUI:
         self.root.title("Monte Carlo Simulation")
 
         # Create and pack the top frame
-        self.frameTop = tk.Frame(self.root, width=800, height=300, bg="#3f334d")
+        self.frameTop = tk.Frame(self.root, width=800, height=300)
         self.frameTop.pack(side=tk.TOP, expand=True)
 
         # Labels and entry fields for the additional fields
