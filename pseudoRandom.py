@@ -1,22 +1,24 @@
 import random
+from readFiles import Manage_psuedo_random_numbers
 
 class PseudoRandom(): 
     """
     A class for managing pseudo-random numbers.
     """
+    rf = Manage_psuedo_random_numbers()
 
     @classmethod
-    def getNumberBeteewZeroAndOne(cls):
+    def getNumberBeteewZeroAndOne(self):
         """
         Generates a pseudo-random floating point number between 0 and 1.
 
         Returns:
             float: A pseudo-random number between 0 and 1.
         """
-        return random.random()
+        return self.rf.get_ri_number_uniform()
     
     @classmethod
-    def getIntNumberBeetween(cls, sup, inf):
+    def getIntNumberBeetween(self, sup, inf):
         """
         Generates a pseudo-random integer between the given upper and lower bounds.
 
@@ -27,11 +29,11 @@ class PseudoRandom():
         Returns:
             int: A pseudo-random integer between sup and inf.
         """
-        return random.randint(sup, inf)
+        return self.rf.get_int_between_uniform(sup, inf)
     
     
     @classmethod
-    def getFloatNumberBetween(cls, sup, inf):
+    def getFloatNumberBetween(self, sup, inf):
         """
         Generates a pseudo-random floating-point number between the given upper and lower bounds.
 
@@ -42,10 +44,10 @@ class PseudoRandom():
         Returns:
             float: A pseudo-random floating-point number between sup and inf.
         """
-        return random.uniform(sup, inf)
+        return self.rf.get_float_between_uniform(sup, inf)
 
     @classmethod
-    def getIntNumberBeetweenWithNormalDistribution(cls, media, desviacion_estandar):
+    def getIntNumberBeetweenWithNormalDistribution(self, media, desviacion_estandar):
         """
         Generates a pseudo-random integer from a normal distribution.
 
@@ -56,4 +58,4 @@ class PseudoRandom():
         Returns:
             int: A pseudo-random integer from a normal distribution.
         """
-        return round(random.normalvariate(media, desviacion_estandar))
+        return self.rf.get_int_between_normal()
