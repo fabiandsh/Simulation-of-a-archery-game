@@ -22,6 +22,7 @@ class GameManager:
         self.count_men = 0
         self.count_women = 0
         self.players_scores = []
+        self.game_number = 0
 
         for _ in range(10):
             self.players_scores.append([])
@@ -68,6 +69,8 @@ class GameManager:
             """
 
     def reset_game(self):
+        self.game_number+=1
+        print(f'Juego número{self.game_number} terminado')
         self.game.reset_game()
 
     def save_winner(self): 

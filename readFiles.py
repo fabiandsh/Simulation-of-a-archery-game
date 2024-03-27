@@ -12,10 +12,11 @@ class Manage_psuedo_random_numbers():
     """
     name_normal_file = './files/normal.csv'
     name_normal_ni_file = './files/normal_ni.csv'
-    name_uniform_file = './files/uniform.csv'
+    name_uniform_file = './files/uniform'
     normal_data = []
     normal_ni_data = []
     uniform_data = []
+    countList=0
     
     def __init__(self):
         """
@@ -85,7 +86,7 @@ class Manage_psuedo_random_numbers():
         """
         Fills the list with the uniform data
         """
-        self.uniform_data = self.read_file(self.name_uniform_file)
+        self.uniform_data = self.read_file(f'{self.name_uniform_file}{self.countList}.csv')
      
     @classmethod    
     def get_ri_number_uniform(self):
@@ -95,6 +96,9 @@ class Manage_psuedo_random_numbers():
         Returns:
             float: a number from the uniform data list
         """
+        if (len(self.uniform_data)== 0):
+            self.countList+=1
+            self.fill_uniform_list()
         return float(self.uniform_data.pop(0))
     
     @classmethod    
